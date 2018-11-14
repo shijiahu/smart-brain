@@ -36,7 +36,9 @@ const initialState = {
     name: '',
     email: '',
     entries: 0,
-    joined: ''
+    joined: '',
+    // pet: '',
+    // age: ''
   }
 }
 
@@ -46,6 +48,9 @@ class App extends Component {
     this.state = initialState;
   }
 
+  
+
+
   loadUser = (data) => {
     this.setState({user: {
       id: data.id,
@@ -54,6 +59,38 @@ class App extends Component {
       entries: data.entries,
       joined: data.joined
     }})
+  }
+  componentDidMount() {
+    const token = window.sessionStorage.getItem('token');
+    if (token){
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      })
+      .then(response => response.json())
+      .then(data=>{
+        if (data && data.id){
+          fetch(`http://localhost:3000/profile/${data.id}`, {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        })
+        .then(response => response.json())
+        .then(user=>{
+          if (user && user.email) {
+            this.loadUser(user)
+            this.onRouteChange('home');
+          }
+        })
+        }
+      })
+      .catch(console.log)
+    }
   }
 
   calculateFaceLocation = (data) => {
