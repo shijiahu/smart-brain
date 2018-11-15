@@ -37,8 +37,8 @@ const initialState = {
     email: '',
     entries: 0,
     joined: '',
-    // pet: '',
-    // age: ''
+    age: 0,
+    pet: ''
   }
 }
 
@@ -48,16 +48,15 @@ class App extends Component {
     this.state = initialState;
   }
 
-  
-
-
   loadUser = (data) => {
     this.setState({user: {
       id: data.id,
       name: data.name,
       email: data.email,
       entries: data.entries,
-      joined: data.joined
+      joined: data.joined,
+      age: data.age,
+      pet: data.pet
     }})
   }
   componentDidMount() {
@@ -202,7 +201,7 @@ class App extends Component {
             <Profile 
               isProfileOpen={isProfileOpen} 
               toggleModal={this.toggleModal} 
-              user={ user}
+              user={ user }
               loadUser={ this.loadUser }/>
           </Modal>
 

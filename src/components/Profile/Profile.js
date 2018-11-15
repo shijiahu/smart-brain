@@ -20,7 +20,7 @@ class Profile extends Component{
 				this.setState({ age: event.target.value})
 				break;
 			case 'user-pet':
-				this.setState({ age: event.target.value})
+				this.setState({ pet: event.target.value})
 				break;
 			default:
 				return;
